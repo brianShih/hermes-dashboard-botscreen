@@ -83,7 +83,9 @@ class TransactionTests(unittest.TestCase):
     def test_write_failure_rolls_back_prior_writes(self):
         actual = engine.atomic_write
         def fail(path, data, mode=0o600):
-            if path == self.core / 'helper.py': raise OSError('injected write failure')
+            # Windows runner TEMP can resolve through a junction/short-name
+            # alias; compare the same resolved identity used by the installer.
+            if path.resolve() == (self.core / 'helper.py').resolve(): raise OSError('injected write failure')
             return actual(path, data, mode)
         with patch.object(engine, 'atomic_write', side_effect=fail):
             with self.assertRaises(OSError): engine.commit(self.anchors, self.edits, self.backups)
