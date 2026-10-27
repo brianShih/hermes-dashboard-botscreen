@@ -1,0 +1,48 @@
+{
+  "acceptancePassed": true,
+  "browserGates": {
+    "isolatedReadOnlySourceMounts": true,
+    "pluginDiscovered": true,
+    "desktopStarted": true,
+    "realFramebuffer": true,
+    "watchInputBlocked": true,
+    "realHumanInput": true,
+    "handbackInputBlocked": true,
+    "abnormalDisconnectRetainsHumanLease": true,
+    "reconnectThreeCycles": true,
+    "singleUseTicketEnforced": true,
+    "unauthorizedRejected": true,
+    "noBrowserRuntimeErrors": true
+  },
+  "backendTests": {
+    "tests": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pluginTests": {
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "identityTests": {
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "scope": "Current Windows host, Chrome, isolated Linux container desktop",
+  "finishedAt": "2026-10-27T15:15:07.396Z",
+  "windowsLiveAcceptance": {
+    "passed": true,
+    "gates": {
+      "freshWindowsBackendReady": true,
+      "startReusesExistingContainer": true,
+      "realFramebufferAndInput": true,
+      "threeDisconnectReconnectCycles": true,
+      "handbackAndWatchGate": true
+    },
+    "cycles": 3
+  }
+}

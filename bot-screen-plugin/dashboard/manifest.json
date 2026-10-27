@@ -1,0 +1,12 @@
+{
+  "name": "bot-screen-lab",
+  "label": "Bot Screen",
+  "description": "Isolated Linux desktop using official authenticated display and control leases",
+  "icon": "Eye",
+  "version": "0.4.0",
+  "tab": {
+    "path": "/bot-screen",
+    "position": "end"
+  },
+  "entry": "dist/index.js"
+}

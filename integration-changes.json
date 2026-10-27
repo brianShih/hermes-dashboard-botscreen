@@ -1,0 +1,184 @@
+{
+  "upstreamCommit": "62629e285614db8cdcc9c48b6732b89d584def68",
+  "modifiedUpstreamFiles": [
+    {
+      "path": ".mailmap",
+      "originalGitBlob": "5af0a658645a441fe111697af5a28972b39cbee9",
+      "sha256": "eba00ae19cff8448e3ff41d16450e2c73580a59ec17ee1f640df9a0a8e588adf",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "eba00ae19cff8448e3ff41d16450e2c73580a59ec17ee1f640df9a0a8e588adf"
+    },
+    {
+      "path": "contributors/README.md",
+      "originalGitBlob": "fcf44a6a17f799b731090d6b116fee6957042048",
+      "sha256": "bf50bbbe21c9f5c9a682dc4a60a105503e7256b885d46ba8ff248546dc8a4c53",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "bf50bbbe21c9f5c9a682dc4a60a105503e7256b885d46ba8ff248546dc8a4c53"
+    },
+    {
+      "path": "evals/compaction/results/SCORECARD-2026-08-15.md",
+      "originalGitBlob": "cdd8ae84910711910f754f43d17c5f3bac69dcb4",
+      "sha256": "caf201f8f2a1edc47493135ea98eed7af65e07a5e89f1233a614b3537c4472aa",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "caf201f8f2a1edc47493135ea98eed7af65e07a5e89f1233a614b3537c4472aa"
+    },
+    {
+      "path": "evals/compaction/results/codex-arm-2026-08-15/gui.json",
+      "originalGitBlob": "bc6f4f676deeb2a0b9c89c94cb00b59958e1b5aa",
+      "sha256": "b950ae8d90eaa3a68db6f095a574832338adf3cf1f73e38ba3b52ed65c168246",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "b950ae8d90eaa3a68db6f095a574832338adf3cf1f73e38ba3b52ed65c168246"
+    },
+    {
+      "path": "optional-skills/mlops/training/unsloth/references/llms-full.md",
+      "originalGitBlob": "22ba5cc992586847b5106e4d189609c40050311c",
+      "sha256": "2ea24ff9846df27cec08ad7a2f2ab56e794a165021a39d56ff427089979f4217",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "2ea24ff9846df27cec08ad7a2f2ab56e794a165021a39d56ff427089979f4217"
+    },
+    {
+      "path": "plugin-catalog/session-flow.yaml",
+      "originalGitBlob": "afd843976bcb4080f5956c342c9e0fd8c6415eb7",
+      "sha256": "501c86d7c4c0fd2b053e346e9afd3b100ffb9e098c3532343f693dee57fc6b96",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "501c86d7c4c0fd2b053e346e9afd3b100ffb9e098c3532343f693dee57fc6b96"
+    },
+    {
+      "path": "scripts/contributor_audit.py",
+      "originalGitBlob": "6b40ab983e993e921a7d95aeb32cba3cbe14ecef",
+      "sha256": "fe9e4cd4305635b758c900227ed8532dcdd61117bff3f224a3e7f3fb87841a5f",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "fe9e4cd4305635b758c900227ed8532dcdd61117bff3f224a3e7f3fb87841a5f"
+    },
+    {
+      "path": "scripts/release.py",
+      "originalGitBlob": "ab9844000578b79e49b87330b3ff3d6a4772ea59",
+      "sha256": "60022bf62055ba0f97f7a242e7183c3ed2fc9f29ab699b03531c961fc8d7e5b1",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "60022bf62055ba0f97f7a242e7183c3ed2fc9f29ab699b03531c961fc8d7e5b1"
+    },
+    {
+      "path": "scripts/releases/authors_legacy.py",
+      "originalGitBlob": "c0e2c596c1b0c4a8f72754a700a5a1b230446552",
+      "sha256": "a457246262934dba4690330ecdb440d0e7dac91088b81a53da7d25be5837b296",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "a457246262934dba4690330ecdb440d0e7dac91088b81a53da7d25be5837b296"
+    },
+    {
+      "path": "tests/scripts/test_contributor_map.py",
+      "originalGitBlob": "b12d230886b33b99691eafe7da7d59a1b79aec07",
+      "sha256": "b53f18d50828155cdd0729be5d95c242faa68701909783be6133ab923d44666c",
+      "reason": "Privacy cleanup of identified personal contact data",
+      "normalizedSha256": "b53f18d50828155cdd0729be5d95c242faa68701909783be6133ab923d44666c"
+    },
+    {
+      "path": "tools/bot_desktop/runtime.py",
+      "originalGitBlob": "8107e5cc9fb1494c1a7e0a4c0bc833aa780c7a36",
+      "sha256": "1ed94e9aeaae7ceee882b2ddd8920b57b2d2b2f3982ea1ccebc7285bffe9c73e",
+      "normalizedSha256": "7bbb65be0d91e40b79b7f9704711668fd1736f9360d24fdcea743a83a93276a9",
+      "reason": "Reviewed desktop fixes: Linux identity guard, Windows start and lease locks, recorded Docker ownership, Windows stream adapter"
+    },
+    {
+      "path": "tools/bot_desktop/lease.py",
+      "originalGitBlob": "1d540cf1da193e4eee2ca2c1c9f6c79e0ad9b226",
+      "sha256": "e5177b9934a8e4b199fbe74674b7d6fc28f4945630e4cf88116db7048f441b13",
+      "normalizedSha256": "e5177b9934a8e4b199fbe74674b7d6fc28f4945630e4cf88116db7048f441b13",
+      "reason": "Reviewed desktop fixes: Linux identity guard, Windows start and lease locks, recorded Docker ownership, Windows stream adapter"
+    },
+    {
+      "path": "hermes_cli/web_routers/display.py",
+      "originalGitBlob": "76193c064547ad8c24f7ad5194f4b5100e8862a0",
+      "sha256": "905af9f6ba633821cfd414161d283040c200c4d99c69d4e2ae44911e3ecfb526",
+      "normalizedSha256": "905af9f6ba633821cfd414161d283040c200c4d99c69d4e2ae44911e3ecfb526",
+      "reason": "Reviewed desktop fixes: Linux identity guard, Windows start and lease locks, recorded Docker ownership, Windows stream adapter"
+    }
+  ],
+  "addedUpstreamFiles": [
+    {
+      "path": "tools/bot_desktop/transport.py",
+      "sha256": "49b8342f7dd3a569cad6d237d5388967c9216c67c011589eb592f45e2bd3c563",
+      "normalizedSha256": "49b8342f7dd3a569cad6d237d5388967c9216c67c011589eb592f45e2bd3c563"
+    },
+    {
+      "path": "hermes_cli/web_display_streams.py",
+      "sha256": "3061ca2e4edbc3bcb7ce450103db3a2a73176af12e53e01a7c14b856d2ece67c",
+      "normalizedSha256": "3061ca2e4edbc3bcb7ce450103db3a2a73176af12e53e01a7c14b856d2ece67c"
+    }
+  ],
+  "pluginFiles": [
+    {
+      "path": "bot-screen-plugin/build.mjs",
+      "sha256": "011c2f6fc256959174e9a641cdab4bd46fc0487df2c15c35a8c37ba98c5db0c1"
+    },
+    {
+      "path": "bot-screen-plugin/dashboard/dist/index.js",
+      "sha256": "e521f0bc5a0dfd47b04231443a7c5137fc26e1a367549b8cbe38471da4d7fe99"
+    },
+    {
+      "path": "bot-screen-plugin/dashboard/LICENSE.novnc.txt",
+      "sha256": "e522f81d37206b944461b6b50bc79bd61ccc838b442ba51871f9566de531f5c4"
+    },
+    {
+      "path": "bot-screen-plugin/dashboard/manifest.json",
+      "sha256": "3eccb21ab98b1554ceaacc1a7c4339c36327f54357cf6c679e685c4724cb1611"
+    },
+    {
+      "path": "bot-screen-plugin/DESIGN.md",
+      "sha256": "9f51081965a92032c5df7d2556e52217b3277143aa9621ea770cc355859b1107"
+    },
+    {
+      "path": "bot-screen-plugin/package-lock.json",
+      "sha256": "5e9494fac3fb4323e01bb0a555c9f59a199a8314f93514002f7bb4e4b680c24a"
+    },
+    {
+      "path": "bot-screen-plugin/package.json",
+      "sha256": "16e005f277282c0da0d9a82d2913e94aa89d94cfe02bc9928faf24e22bfaf513"
+    },
+    {
+      "path": "bot-screen-plugin/src/i18n.mjs",
+      "sha256": "1033ed623b2377b79bc6a3b0f093de066907e4aefd4d2c6fd45903fe4939f360"
+    },
+    {
+      "path": "bot-screen-plugin/src/locales/en.json",
+      "sha256": "9eb877c4372c86aae88972b73b0f2a6179c4f3d8978faa466fce9e461298846f"
+    },
+    {
+      "path": "bot-screen-plugin/src/locales/zh-Hans.json",
+      "sha256": "f53e9a0c32e3b3bc072becd95213f3458f4b4d16e0fa02b2ea240cd095a77e5e"
+    },
+    {
+      "path": "bot-screen-plugin/src/locales/zh-Hant.json",
+      "sha256": "cf546373a26b8878c351896a4e991c8a7631fd6c66aba21d1f51e24514274a51"
+    },
+    {
+      "path": "bot-screen-plugin/src/plugin.mjs",
+      "sha256": "8ad27da3ce74fdb9cd6f4e0a4260308599dd06435ea41a6a4f755493670898e3"
+    },
+    {
+      "path": "bot-screen-plugin/src/screen.mjs",
+      "sha256": "9b349c96b4a7bba97508373521a09dc78e65ff9c9a5abdb91807fac0cea71b4e"
+    },
+    {
+      "path": "bot-screen-plugin/src/styles.css",
+      "sha256": "55ba480010fe37871d30965a37471e3def40d541800301433820fb3c85ff39e5"
+    },
+    {
+      "path": "bot-screen-plugin/tests/i18n.test.mjs",
+      "sha256": "9d5f07016af92a3421ea1cde285f621b0b2b2237b4cbb21a0aab8ab53cefc884"
+    },
+    {
+      "path": "bot-screen-plugin/tests/screen.test.mjs",
+      "sha256": "656168b30503f4ab05225141b1741e80af850c2719c2c2ee27f064c76fd956a8"
+    }
+  ],
+  "privacyOmissions": {
+    "prefixes": [
+      "contributors/emails/"
+    ],
+    "files": [
+      "contributors/reattributed.tsv"
+    ],
+    "removedFileCount": 2002,
+    "reason": "Personal contributor contact and attribution datasets omitted"
+  }
+}

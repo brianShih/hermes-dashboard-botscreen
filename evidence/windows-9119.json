@@ -1,0 +1,50 @@
+{
+  "origin": "http://127.0.0.1:9119",
+  "gates": {
+    "freshWindowsBackendReady": true,
+    "startReusesExistingContainer": true,
+    "realFramebufferAndInput": true,
+    "threeDisconnectReconnectCycles": true,
+    "handbackAndWatchGate": true
+  },
+  "cycles": [
+    {
+      "frame": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchInputBlocked": true,
+      "realInput": true,
+      "disconnectRetainsLease": true,
+      "reconnected": true,
+      "handbackBlocksInput": true
+    },
+    {
+      "frame": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchInputBlocked": true,
+      "realInput": true,
+      "disconnectRetainsLease": true,
+      "reconnected": true,
+      "handbackBlocksInput": true
+    },
+    {
+      "frame": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchInputBlocked": true,
+      "realInput": true,
+      "disconnectRetainsLease": true,
+      "reconnected": true,
+      "handbackBlocksInput": true
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

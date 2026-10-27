@@ -1,0 +1,14 @@
+{
+  "platform": "win32",
+  "backend": "docker",
+  "gates": {
+    "preflightDoesNotMutateTargets": true,
+    "freshInstallDashboardAndRealDesktop": true,
+    "installedBrowserFlow": true,
+    "exportedProviderCredentialNotForwarded": true,
+    "existingSettingsCommentsAndSecretsPreserved": true,
+    "repeatInstallNoChanges": true,
+    "rollbackRestoresOriginalBytes": true
+  },
+  "passed": true
+}

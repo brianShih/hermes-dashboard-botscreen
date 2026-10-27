@@ -1,0 +1,270 @@
+--- a/tools/bot_desktop/runtime.py
++++ b/tools/bot_desktop/runtime.py
+@@ -567,7 +567,11 @@
+ def open_rfb_stream() -> subprocess.Popen:
+     """Popen whose stdin/stdout carry RFB bytes for a sandbox-hosted screen (``in_sandbox()`` only)."""
+     from tools.bot_desktop import sandbox_host
+-    env = _sandbox_env(create=False)
++    marker = sandbox_host._read_marker()
++    if marker.get("backend") == "DockerEnvironment":
++        from tools.bot_desktop.transport import open_recorded_docker
++        return open_recorded_docker(marker, _profile_name())
++    env = _owned_sandbox_env()
+     if env is None:
+         raise RuntimeError("the sandbox hosting this screen is not running")
+     return sandbox_host.open_rfb_stream(env, _profile_name())
+@@ -616,9 +620,18 @@
+     """Status of a sandbox-placed screen. Package presence is only known once the sandbox exists; before
+     that the pane shows "installed" with the image hint carried in ``install_command`` so Start can explain."""
+     from tools.bot_desktop import sandbox_host
+-    env = _owned_sandbox_env() or _sandbox_env(create=False)
+-    missing = sandbox_host.missing_binaries(env) if env is not None else []
+-    published = sandbox_host.published_env(env, profile or _profile_name()) if env is not None else {}
++    marker = sandbox_host._read_marker()
++    if marker.get("backend") == "DockerEnvironment":
++        from tools.bot_desktop.transport import recorded_docker_owner
++        env, missing = None, []
++        try:
++            published = recorded_docker_owner(marker, profile or _profile_name()).published()
++        except (OSError, subprocess.TimeoutExpired):
++            published = {}
++    else:
++        env = _owned_sandbox_env() or _sandbox_env(create=False)
++        missing = sandbox_host.missing_binaries(env) if env is not None else []
++        published = sandbox_host.published_env(env, profile or _profile_name()) if env is not None else {}
+     running = bool(published.get("DISPLAY"))
+     # No install_command: the pane's Install button runs apt on the HOST, which is the wrong machine here.
+     # A sandbox missing the stack is a blocker (shown in place of Start) naming the image that has it.
+@@ -803,13 +816,22 @@
+ 
+ def _start_in_sandbox(wait_seconds: float) -> DesktopStatus:
+     from tools.bot_desktop import sandbox_host
+-    env = _sandbox_env(create=True)
+-    if env is None:
+-        raise RuntimeError("the terminal backend's sandbox could not be started, so there is nowhere to put the screen")
+     sd = state_dir()
+     sd.mkdir(parents=True, exist_ok=True)
+     os.chmod(sd, 0o700)
+     with _flocked(sd / "start.lock"):
++        marker = sandbox_host._read_marker()
++        if marker.get("backend") == "DockerEnvironment":
++            from tools.bot_desktop.transport import recorded_docker_owner
++            # A still-live owner wins over a new terminal planner's environment
++            # fingerprint. Restarting the Dashboard must not create a new desktop.
++            owner = recorded_docker_owner(marker, _profile_name())
++            if owner.published().get("DISPLAY"):
++                touch_activity()
++                return status()
++        env = _sandbox_env(create=True)
++        if env is None:
++            raise RuntimeError("the terminal backend's sandbox could not be started, so there is nowhere to put the screen")
+         # The dock's Browser icon runs the sandbox's own Playwright Chromium on the profile agent-browser
+         # uses there: the human's browser is the bot's browser, as on the host.
+         from tools.bot_desktop.browser import dock_exec_line
+@@ -825,6 +847,10 @@
+ def _sandbox_published_env() -> dict[str, str]:
+     """Published env of a sandbox-hosted screen (the caller saw the host-side marker written at start)."""
+     from tools.bot_desktop import sandbox_host
++    marker = sandbox_host._read_marker()
++    if marker.get("backend") == "DockerEnvironment":
++        from tools.bot_desktop.transport import recorded_docker_owner
++        return recorded_docker_owner(marker, _profile_name()).published()
+     env = _sandbox_env(create=False)
+     if env is None:
+         return {}
+--- a/tools/bot_desktop/lease.py
++++ b/tools/bot_desktop/lease.py
+@@ -127,8 +127,15 @@
+     def __init__(self, path: Path):
+         self._lockfile = path.with_suffix(".lock")
+         self._fh = None
++        self._windows_guard = None
+ 
+     def __enter__(self):
++        if os.name == "nt":
++            from tools.bot_desktop.runtime import _flocked
++            _private_dir(self._lockfile)
++            self._windows_guard = _flocked(self._lockfile)
++            self._windows_guard.__enter__()
++            return self
+         if fcntl is None:
+             return self
+         _private_dir(self._lockfile)
+@@ -137,6 +144,8 @@
+         return self
+ 
+     def __exit__(self, *exc):
++        if self._windows_guard is not None:
++            return self._windows_guard.__exit__(*exc)
+         if self._fh is None:
+             return
+         fcntl.flock(self._fh.fileno(), fcntl.LOCK_UN)
+--- a/hermes_cli/web_routers/display.py
++++ b/hermes_cli/web_routers/display.py
+@@ -22,6 +22,7 @@
+ 
+ import asyncio
+ import logging
++import os
+ from pathlib import Path
+ from typing import Optional
+ 
+@@ -108,6 +109,9 @@
+             return reader, writer, None
+     finally:
+         reset_hermes_home_override(token)
++    if os.name == "nt":
++        from hermes_cli.web_display_streams import pipe_stream
++        return pipe_stream(relay)
+     loop = asyncio.get_running_loop()
+     reader = asyncio.StreamReader()
+     await loop.connect_read_pipe(lambda: asyncio.StreamReaderProtocol(reader), relay.stdout)
+@@ -226,12 +230,15 @@
+                 _log.debug("display ws ended: %r", exc)
+     finally:
+         unsubscribe()
++        if relay is not None and os.name == "nt":
++            from hermes_cli.web_display_streams import close_pipe_relay
++            await close_pipe_relay(relay)
+         writer.close()
+         try:
+             await writer.wait_closed()
+         except OSError:  # Xvnc already gone (ECONNRESET / EPIPE on the FIN)
+             pass
+-        if relay is not None:
++        if relay is not None and os.name != "nt":
+             relay.kill()  # the exec client; Xvnc inside the sandbox stays up
+         # Closing the viewer window hands control back. A DROPPED link (laptop lid, Wi-Fi, 1006)
+         # keeps the human's exclusion: they may be mid-login on that screen and the agent must not
+--- /dev/null
++++ b/tools/bot_desktop/transport.py
+@@ -0,0 +1,74 @@
++"""Reconnect to the exact recorded Docker desktop without the terminal registry."""
++from __future__ import annotations
++
++import json
++from dataclasses import dataclass
++from pathlib import PurePosixPath
++import re
++import shlex
++import subprocess
++
++
++@dataclass(frozen=True)
++class DockerDesktop:
++    docker: str
++    container: str
++    directory: str
++    user: str | None
++
++    def command(self, argv: list[str], *, interactive: bool = False) -> list[str]:
++        user = ["-u", self.user] if self.user else []
++        return [self.docker, "exec", *(["-i"] if interactive else []), *user, self.container, *argv]
++
++    def published(self) -> dict[str, str]:
++        directory = shlex.quote(self.directory)
++        command = (f"kill -0 $(cat {directory}/launcher.pid 2>/dev/null) 2>/dev/null "
++                   f"&& test -S {directory}/rfb.sock && cat {directory}/env")
++        result = subprocess.run(self.command(["bash", "-c", command]),
++                                capture_output=True, text=True, timeout=15, check=False)
++        if result.returncode:
++            return {}
++        return dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
++
++
++def recorded_docker_owner(marker: dict, profile: str) -> DockerDesktop:
++    from tools.environments.docker import find_docker, _sanitize_label_value
++
++    container = str(marker.get("container") or "")
++    directory = str(marker.get("dir") or "")
++    path = PurePosixPath(directory)
++    if (marker.get("backend") != "DockerEnvironment" or marker.get("profile") != profile
++            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", container)
++            or not path.is_absolute() or ".." in path.parts
++            or path.parts[-2:] != ("hermes-bot-desktop", profile)):
++        raise OSError("Invalid recorded desktop owner")
++    docker = find_docker()
++    if not docker:
++        raise OSError("Docker executable is unavailable")
++    result = subprocess.run(
++        [docker, "inspect", "--format", '{{json .State.Running}}|{{json .Id}}|{{json .Config.Labels}}', container],
++        capture_output=True, text=True, timeout=15, check=False)
++    if result.returncode:
++        raise OSError("The recorded desktop container is unavailable")
++    try:
++        running, identity, labels = (json.loads(item) for item in result.stdout.strip().split("|", 2))
++    except (ValueError, TypeError) as exc:
++        raise OSError("Invalid desktop container inspection") from exc
++    if (running is not True or not re.fullmatch(r"[a-f0-9]{64}", str(identity))
++            or not isinstance(labels, dict) or labels.get("hermes-agent") != "1"
++            or labels.get("hermes-profile") != _sanitize_label_value(profile)):
++        raise OSError("Desktop container does not belong to this profile")
++    probe = subprocess.run([docker, "exec", identity, "id", "-u", "pn"],
++                           capture_output=True, timeout=10, check=False)
++    return DockerDesktop(docker, identity, str(path), "pn" if probe.returncode == 0 else None)
++
++
++def recorded_docker_command(marker: dict, profile: str) -> list[str]:
++    from tools.bot_desktop.sandbox_host import _RELAY
++    owner = recorded_docker_owner(marker, profile)
++    return owner.command(["python3", "-c", _RELAY, owner.directory + "/rfb.sock"], interactive=True)
++
++
++def open_recorded_docker(marker: dict, profile: str) -> subprocess.Popen:
++    return subprocess.Popen(recorded_docker_command(marker, profile), stdin=subprocess.PIPE,
++                            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, close_fds=True)
+--- /dev/null
++++ b/hermes_cli/web_display_streams.py
+@@ -0,0 +1,52 @@
++"""Bounded async access to Windows subprocess pipes, including selector loops."""
++from __future__ import annotations
++
++import asyncio
++import subprocess
++
++
++class PipeReader:
++    def __init__(self, pipe):
++        self.pipe = pipe
++
++    async def read(self, size: int) -> bytes:
++        return await asyncio.to_thread(self.pipe.read1, size)
++
++
++class PipeWriter:
++    def __init__(self, pipe):
++        self.pipe = pipe
++        self.pending = bytearray()
++
++    def write(self, data: bytes) -> None:
++        if len(self.pending) + len(data) > 16 * 1024 * 1024:
++            raise ConnectionError("Desktop stream write buffer exceeded")
++        self.pending.extend(data)
++
++    async def drain(self) -> None:
++        data = bytes(self.pending)
++        self.pending.clear()
++        await asyncio.to_thread(self._flush, data)
++
++    def _flush(self, data: bytes) -> None:
++        self.pipe.write(data)
++        self.pipe.flush()
++
++    def close(self) -> None:
++        self.pipe.close()
++
++    async def wait_closed(self) -> None:
++        return
++
++
++def pipe_stream(relay: subprocess.Popen):
++    return PipeReader(relay.stdout), PipeWriter(relay.stdin), relay
++
++
++async def close_pipe_relay(relay: subprocess.Popen) -> None:
++    # Killing the exec client unblocks pending reads/writes before closing their
++    # buffered handles. The desktop inside the container is left running.
++    if relay.poll() is None:
++        relay.kill()
++    await asyncio.to_thread(relay.wait)
++    relay.stdout.close()

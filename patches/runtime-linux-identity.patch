@@ -1,0 +1,54 @@
+--- a/tools/bot_desktop/runtime.py
++++ b/tools/bot_desktop/runtime.py
+@@ -177,14 +177,39 @@
+         return None
+ 
+ 
++def _linux_process_identity(pid: int) -> Optional[str]:
++    """Kernel start ticks do not move with psutil's epoch boot-time estimate.
++
++    Bind ticks to boot and PID namespace as well, so a persisted record cannot
++    adopt a reused PID after reboot or container recreation. Missing procfs fails
++    closed; never upgrade a legacy record by guessing its current owner.
++    """
++    try:
++        boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
++        fields = Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()
++        ticks = int(fields[19])  # stat field 22; comm may contain spaces or ')'
++        namespace = Path(f'/proc/{pid}/ns/pid').stat().st_ino
++        if not boot or ticks < 0:
++            return None
++        return f'linux-v1:{boot}:{namespace}:{ticks}'
++    except (OSError, ValueError, IndexError):
++        return None
++
++
+ def _launcher_pid() -> Optional[int]:
+-    """The live launcher's pid, or None. ``launcher.pid`` holds ``"<pid> <create_time>"``: a recycled pid
+-    with a different start time is somebody else's process and must never be reported as ours nor
+-    killed by :func:`stop`. The pre-identity single-number format is treated as not running."""
++    """Verify stable kernel identity, or the unchanged strict legacy epoch guard.
++
++    Single-number records are never trusted. New launches record kernel identity;
++    old records are not automatically migrated because their PID may be reused.
++    """
+     raw = _read(state_dir() / "launcher.pid")
+     pid_s, _, born_s = (raw or "").partition(" ")
+     if not pid_s.isdigit() or not born_s:
+         return None
++    if born_s.startswith('linux-v1:'):
++        pid = int(pid_s)
++        actual = _linux_process_identity(pid)
++        return pid if actual is not None and actual == born_s and _pid_alive(pid) else None
+     try:
+         pid, born = int(pid_s), float(born_s)
+     except ValueError:
+@@ -747,7 +772,7 @@
+             ["bash", str(_LAUNCHER)], env=child_env, stdin=subprocess.DEVNULL, stdout=log, stderr=log,
+             start_new_session=True, close_fds=True)
+         log.close()
+-        born = _create_time(proc.pid)
++        born = _linux_process_identity(proc.pid)
+         (sd / "launcher.pid").write_text(f"{proc.pid} {born if born is not None else 0}", encoding="utf-8")
+ 
+         deadline = time.monotonic() + wait_seconds

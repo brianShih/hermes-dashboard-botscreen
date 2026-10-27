@@ -1,0 +1,90 @@
+{
+  "startedAt": "2026-10-27T15:14:32.388Z",
+  "origin": "http://127.0.0.1:9124",
+  "container": "bot-screen-integration",
+  "profile": "bot-screen-lab",
+  "gates": {
+    "isolatedReadOnlySourceMounts": true,
+    "pluginDiscovered": true,
+    "desktopStarted": true,
+    "realFramebuffer": true,
+    "watchInputBlocked": true,
+    "realHumanInput": true,
+    "handbackInputBlocked": true,
+    "abnormalDisconnectRetainsHumanLease": true,
+    "reconnectThreeCycles": true,
+    "singleUseTicketEnforced": true,
+    "unauthorizedRejected": true,
+    "noBrowserRuntimeErrors": true
+  },
+  "cycles": [
+    {
+      "index": 0,
+      "framebuffer": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchBlocked": true,
+      "inputDelivered": true,
+      "handbackBlocked": true,
+      "sameDesktop": true
+    },
+    {
+      "index": 1,
+      "framebuffer": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchBlocked": true,
+      "inputDelivered": true,
+      "handbackBlocked": true,
+      "sameDesktop": true
+    },
+    {
+      "index": 2,
+      "framebuffer": {
+        "width": 1440,
+        "height": 900,
+        "colors": 256
+      },
+      "watchBlocked": true,
+      "inputDelivered": true,
+      "handbackBlocked": true,
+      "sameDesktop": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "passed": true,
+  "framebuffer": {
+    "width": 1440,
+    "height": 900,
+    "colors": 256
+  },
+  "beforeIdentity": {
+    "record": "<PROCESS_IDENTITY_REDACTED>",
+    "ticks": "40621322"
+  },
+  "ticketChecks": {
+    "first": {
+      "bytes": 12
+    },
+    "replay": {
+      "code": 4401
+    }
+  },
+  "unauthorized": {
+    "status": 401,
+    "sockets": {
+      "/api/ws": {
+        "code": 1006
+      },
+      "/api/display/ws": {
+        "code": 4401
+      }
+    }
+  },
+  "finishedAt": "2026-10-27T15:15:07.396Z"
+}

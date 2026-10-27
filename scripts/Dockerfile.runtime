@@ -1,0 +1,3 @@
+FROM hermes-bot-screen-lab-runtime:local
+# Python interpreter + installed packages only; no profiles or credentials.
+ADD dependencies.tar /

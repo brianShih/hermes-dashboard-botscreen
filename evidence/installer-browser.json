@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "gates": {
+    "newIsolatedProfileDiscovered": true,
+    "actualCanvasFromInstalledPlugin": true,
+    "threeLanguagesSwitch": true
+  },
+  "errors": []
+}

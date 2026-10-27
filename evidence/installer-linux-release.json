@@ -1,0 +1,12 @@
+{
+  "platform": "linux",
+  "backend": "native",
+  "gates": {
+    "preflightDoesNotMutateTargets": true,
+    "freshInstallDashboardAndRealDesktop": true,
+    "existingSettingsCommentsAndSecretsPreserved": true,
+    "repeatInstallNoChanges": true,
+    "rollbackRestoresOriginalBytes": true
+  },
+  "passed": true
+}
