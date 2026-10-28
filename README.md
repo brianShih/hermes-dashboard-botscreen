@@ -1,3 +1,40 @@
+# Bot Screen｜Hermes Dashboard desktop bridge / 桌面橋接
+
+Watch an isolated Linux desktop in Hermes Dashboard, take over keyboard and mouse control, and hand control back to the Agent. Includes a multilingual plugin (0.4.0), Windows/Linux backend fixes, and a one-click installer (0.5.0).
+在 Hermes Dashboard 觀看隔離 Linux 桌面、接管鍵盤滑鼠，再將控制權交回 Agent。包含多國語言外掛、跨平台後端修正及一鍵安裝器。
+
+## Quick start / 快速開始
+
+Download and fully extract [Installer ZIP / 安裝包](dist/bot-screen-hermes-one-click-0.5.0.zip). Windows: double-click `Install.cmd`. Linux: run `bash install.sh`. Requires existing compatible Hermes and, for Docker mode, a running Docker installation. Default URL: `http://127.0.0.1:9119/bot-screen`.
+下載並完整解壓縮安裝包；Windows 雙擊 `Install.cmd`，Linux 執行 `bash install.sh`。需要既有相容 Hermes；Docker 模式需要已啟動 Docker。
+
+| Documentation / 文件 | 繁體中文 | English |
+|---|---|---|
+| Installation / 一鍵安裝 | [指南](ONE_CLICK.md) | [Guide](ONE_CLICK.en.md) |
+| Architecture / 架構 | [分析](ARCHITECTURE.md) | [Overview](ARCHITECTURE.en.md) |
+| Cross-platform / 跨平台 | [設計](CROSS_PLATFORM.md) | [Design](CROSS_PLATFORM.en.md) |
+| Isolated lab / 隔離實驗環境 | [整合](INTEGRATION.md) | [Integration](INTEGRATION.en.md) |
+| Manual installation / 手動安裝 | [指南](INSTALL_HERMES.md) | [Guide](INSTALL_HERMES.en.md) |
+| UI/UX and languages / 介面與語言 | [設計](bot-screen-plugin/DESIGN.md) | [Design](bot-screen-plugin/DESIGN.en.md) |
+
+## Repository / 專案內容
+
+| Path / 路徑 | Purpose / 用途 |
+|---|---|
+| `installer/` and entry scripts | Compatibility checks, guarded updates, backups and rollback / 相容性、更新、備份、回復 |
+| `bot-screen-plugin/` | UI source, locale dictionaries, noVNC bundle / 介面、語言檔、預建外掛 |
+| `hermes/` | Sanitized Hermes source snapshot and recorded modifications / 清理後的核心快照與修改 |
+| `patches/`, `scripts/` | Core fixes, build tools and acceptance checks / 核心補丁、建置、驗證 |
+| `dist/`, `evidence/` | Portable installer and selected acceptance records / 安裝包與驗收紀錄 |
+
+Dashboard uses React/TypeScript/Vite and a Python backend. Bot Screen connects display RPC and RFB WebSocket streams through noVNC to the Linux desktop. Hermes Desktop is a separate Electron application. Control leases, one-time tickets, profile ownership checks, and server-side input filtering enforce access.
+Dashboard 使用 React／TypeScript／Vite 與 Python 後端。Bot Screen 經 RPC、RFB WebSocket 與 noVNC 連接 Linux 桌面；Hermes Desktop 是另一個 Electron 應用。後端透過控制權 lease、一次性票證、profile 擁有者檢查及輸入過濾管理存取。
+
+Validation covers the current Windows/Docker host and native Linux desktops inside a Linux container. Clean VMs, other physical machines, every Linux distribution, Linux-host Docker daemons, and macOS are not certified. Archives exclude user profiles and credentials; installation backups may contain private existing settings. Preserve upstream licenses, including the bundled noVNC notice.
+驗證範圍為目前 Windows／Docker 主機與 Linux 容器內原生桌面；不是所有電腦及平台的全面認證。安裝包不含使用者 profile 或帳密；安裝後備份可能含私人設定，請勿公開，並保留上游授權。
+
+## 詳細中文介紹 / Detailed Chinese reference
+
 > **一鍵安裝 0.5.0：** Windows 完整解壓縮後雙擊 `Install.cmd`；Linux 執行 `bash install.sh`。前後端修正、隔離 profile、備份與回復已整合，請先看 [ONE_CLICK.md](ONE_CLICK.md)。下文保留架構與手動／舊版安裝說明。
 
 # Bot Screen：Hermes 的桌面橋接與 Web 操作介面

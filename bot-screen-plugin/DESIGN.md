@@ -1,6 +1,8 @@
+**繁體中文** | [English](DESIGN.en.md)
+
 # Bot Screen UI / UX
 
-版本：0.3.0。此文件描述 Dashboard plugin 的介面契約，原生 Electron UI 不在範圍內。
+版本：UI 0.4.0，安裝包 0.5.0。此文件描述 Dashboard plugin 的介面契約，原生 Electron UI 不在範圍內。
 
 ## 操作順序
 

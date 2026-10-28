@@ -1,3 +1,5 @@
+**繁體中文** | [English](ONE_CLICK.en.md)
+
 # Bot Screen 一鍵安裝（0.5.0）
 
 把多國語言外掛、Windows／Linux 後端修正與隔離 profile 整合成同一個安裝入口。適用於**已安裝 Hermes、且程式版本通過相容性檢查**的電腦；不是 Hermes 本體的安裝器。

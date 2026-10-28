@@ -1,3 +1,5 @@
+**繁體中文** | [English](INTEGRATION.en.md)
+
 # Bot Screen Webapp 整合
 
 要將外掛裝進另一份既有 `hermes-agent`，請依 [INSTALL_HERMES.md](INSTALL_HERMES.md) 操作。下文是本專案自己的隔離容器環境，不會自動安裝到日常 Hermes。

@@ -1,3 +1,5 @@
+**繁體中文** | [English](ARCHITECTURE.en.md)
+
 # Hermes Dashboard、Desktop 與 Webapp 架構分析
 
 > 後續整合更新：Bot Screen plugin 已納入本目錄，透過隔離 profile 掛入這份 Webapp。操作方式與實測範圍見 [INTEGRATION.md](INTEGRATION.md)；下文「尚未整合／尚未執行」敘述保留為最初架構分析的歷史狀態。

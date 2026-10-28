@@ -1,3 +1,5 @@
+**繁體中文** | [English](INSTALL_HERMES.en.md)
+
 > **一鍵安裝 0.5.0：** Windows 完整解壓縮後雙擊 `Install.cmd`；Linux 執行 `bash install.sh`。前後端修正、隔離 profile、備份與回復已整合，請先看 [ONE_CLICK.md](ONE_CLICK.md)。下文保留架構與手動／舊版安裝說明。
 
 # 將 Bot Screen 安裝到 hermes-agent

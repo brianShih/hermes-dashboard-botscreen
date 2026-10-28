@@ -6,19 +6,30 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 files = [
-    'Install.cmd', 'Install.ps1', 'install.sh', 'ONE_CLICK.md',
+    'Install.cmd', 'Install.ps1', 'install.sh', 'ARCHITECTURE.md', 'ARCHITECTURE.en.md', 'INTEGRATION.md', 'INTEGRATION.en.md', 'ONE_CLICK.md', 'ONE_CLICK.en.md',
     'scripts/install-dashboard.py', 'installer/engine.py', 'installer/helper.py', 'installer/runtime-payload.json',
-    'INSTALL_HERMES.md', 'scripts/install-plugin.py', 'patches/runtime-linux-identity.patch',
-    'CROSS_PLATFORM.md', 'patches/runtime-windows-lock.patch', 'patches/desktop-cross-platform.patch',
+    'INSTALL_HERMES.md', 'INSTALL_HERMES.en.md', 'scripts/install-plugin.py', 'patches/runtime-linux-identity.patch',
+    'CROSS_PLATFORM.md', 'CROSS_PLATFORM.en.md', 'patches/runtime-windows-lock.patch', 'patches/desktop-cross-platform.patch',
     'bot-screen-plugin/package.json', 'bot-screen-plugin/package-lock.json',
     'bot-screen-plugin/build.mjs', 'bot-screen-plugin/src/plugin.mjs', 'bot-screen-plugin/src/screen.mjs',
     'bot-screen-plugin/src/styles.css', 'bot-screen-plugin/src/i18n.mjs',
     'bot-screen-plugin/src/locales/en.json', 'bot-screen-plugin/src/locales/zh-Hant.json', 'bot-screen-plugin/src/locales/zh-Hans.json',
-    'bot-screen-plugin/DESIGN.md',
+    'bot-screen-plugin/DESIGN.md', 'bot-screen-plugin/DESIGN.en.md',
     'bot-screen-plugin/dashboard/manifest.json', 'bot-screen-plugin/dashboard/dist/index.js',
     'bot-screen-plugin/dashboard/LICENSE.novnc.txt',
 ]
-readme = '''# Bot Screen 一鍵安裝包 0.5.0
+readme = '''# Bot Screen one-click installer / 一鍵安裝
+
+Windows: fully extract, then double-click Install.cmd. Linux: run bash install.sh.
+Read ONE_CLICK.en.md (English) or ONE_CLICK.md (繁體中文).
+Requires existing compatible Hermes and a running Docker installation for Docker mode.
+Reuses Hermes Python; no Node.js, npm or Git required. Includes guarded backend fixes,
+isolated profile setup, backups, rollback and real RFB readiness checks. A backend
+restart may require the service owner. installed-needs-attention is not full readiness.
+The archive excludes user profiles, credentials and backups. Keep installation backups private.
+Preserve bundled upstream license notices. See the guide for validation limits.
+
+# Bot Screen 一鍵安裝包 0.5.0
 
 Windows：完整解壓縮後雙擊 Install.cmd。
 Linux：在解壓縮的資料夾執行 bash install.sh。

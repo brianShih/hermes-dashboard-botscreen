@@ -1,3 +1,5 @@
+**繁體中文** | [English](CROSS_PLATFORM.en.md)
+
 > **一鍵安裝 0.5.0：** Windows 完整解壓縮後雙擊 `Install.cmd`；Linux 執行 `bash install.sh`。前後端修正、隔離 profile、備份與回復已整合，請先看 [ONE_CLICK.md](ONE_CLICK.md)。下文保留架構與手動／舊版安裝說明。
 
 # Bot Screen 跨平台後端
@@ -15,7 +17,7 @@ Dashboard 可位於 Windows 或 Linux；隔離桌面仍由 Linux 提供。macOS 
 
 ## 安裝到既有 Hermes
 
-一般外掛安裝器只更新前端，不修改 Hermes 核心。Windows 後端修正屬額外的核心補丁，需先備份下列檔案：
+舊版 `scripts/install-plugin.py` 只更新前端；一鍵安裝器也整合後端。此舊版外掛安裝器，不修改 Hermes 核心。Windows 後端修正屬額外的核心補丁，需先備份下列檔案：
 
 ```text
 tools/bot_desktop/runtime.py
@@ -45,4 +47,4 @@ git -C <HermesRoot> apply --ignore-space-change <PackageRoot>/patches/desktop-cr
 - `scripts/windows-acceptance.mjs`：真實畫面／輸入、觀看阻擋、接管／交回及三輪異常斷線重連。
 - `scripts/acceptance.mjs`：Linux 9124 完整回歸，包括票證重播與未登入拒絕。
 
-實際結果以 `evidence/windows-9119.json`、`evidence/windows-9125.json` 和 `evidence/acceptance.json` 為準。
+實際結果以 `evidence/windows-9119.json` 和 `evidence/acceptance.json` 為準。

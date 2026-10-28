@@ -28,3 +28,9 @@ Machine-readable evidence:
 The Linux test image initially had an incomplete Hermes dependency environment. The verified Linux runtime dependencies from the existing integration environment were copied into the separate test container before acceptance; no raw pip install or dependency change was made to the user's daily Hermes. Test desktop containers were stopped after acceptance; data was retained for inspection.
 
 This proves current-host isolated acceptance, not a clean Windows VM, another physical computer, every Linux distribution, a Linux-host Docker daemon, macOS, or downloading an uncached desktop image. The installer requires an existing functional Hermes runtime and refuses incompatible function shapes. Docker/OS provisioning and signing are not included. See `ONE_CLICK.md` for prerequisites, deferred restart outcomes and rollback instructions.
+
+
+## Bilingual documentation refresh / 中英文件更新
+
+English guides and language links were added. Archive hashes and English-guide links passed; non-Markdown runtime files match the previously accepted bundle. Functional desktop acceptance was not rerun for this documentation-only refresh.
+安裝包新增英文指南與語言切換；雜湊及英文指南連結檢查通過，程式內容與前次驗收包一致，本次未重跑真實桌面驗收。
