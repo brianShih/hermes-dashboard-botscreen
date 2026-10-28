@@ -1,8 +1,8 @@
 ---
 name: bot-screen-linux
 description: "Operate the isolated Linux desktop shown by Hermes Bot Screen: files, applications, browser and terminal tasks, human takeover, and reconnect recovery. 操作 Bot Screen 中的隔離 Linux 桌面，包含檔案、應用程式、終端機、人工接管與斷線恢復。"
-version: 1.0.0
-platforms: [linux]
+version: 1.1.0
+platforms: [windows, linux]
 metadata:
   hermes:
     tags: [bot-screen, linux, desktop, isolation]
@@ -55,3 +55,8 @@ Skill 不增加授權；外部提交、安裝、刪除及權限修改仍依使�
 
 Report what changed, where the result lives, what was verified, and unresolved limitations. Distinguish host, Linux environment, and browser evidence.
 回報修改內容、成果位置、實際驗證及限制，區分主機、Linux 環境與瀏覽器證據。
+
+## Practical workflows / 實作流程
+
+Before your first operation, follow [verified workflows](references/workflows.md). The distributed read-only probe at `scripts/environment_probe.py` must run through a terminal already confirmed to target the Linux desktop; it cannot establish routing by itself. Run it with `python3`, not on the Windows host.
+首次操作請讀實作流程；唯讀環境探查腳本必須經已確認指向該桌面的 Linux 終端機執行，腳本本身不能證明路由正確。

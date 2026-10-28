@@ -7,6 +7,10 @@ import zipfile
 ROOT = Path(__file__).resolve().parent.parent
 files = [
     'Install.cmd', 'Install.ps1', 'install.sh', 'ARCHITECTURE.md', 'ARCHITECTURE.en.md', 'INTEGRATION.md', 'INTEGRATION.en.md', 'ONE_CLICK.md', 'ONE_CLICK.en.md',
+    'SKILLS.md', 'installer/skill-baselines.json',
+    'skills/bot-screen-linux/SKILL.md', 'skills/bot-screen-linux/references/linux-tasks.md',
+    'skills/bot-screen-linux/references/environment.md', 'skills/bot-screen-linux/references/workflows.md',
+    'skills/bot-screen-linux/scripts/environment_probe.py',
     'scripts/install-dashboard.py', 'installer/engine.py', 'installer/helper.py', 'installer/runtime-payload.json',
     'INSTALL_HERMES.md', 'INSTALL_HERMES.en.md', 'scripts/install-plugin.py', 'patches/runtime-linux-identity.patch',
     'CROSS_PLATFORM.md', 'CROSS_PLATFORM.en.md', 'patches/runtime-windows-lock.patch', 'patches/desktop-cross-platform.patch',
@@ -29,7 +33,7 @@ restart may require the service owner. installed-needs-attention is not full rea
 The archive excludes user profiles, credentials and backups. Keep installation backups private.
 Preserve bundled upstream license notices. See the guide for validation limits.
 
-# Bot Screen 一鍵安裝包 0.5.0
+# Bot Screen 一鍵安裝包 0.6.0
 
 Windows：完整解壓縮後雙擊 Install.cmd。
 Linux：在解壓縮的資料夾執行 bash install.sh。
@@ -46,7 +50,7 @@ Linux：在解壓縮的資料夾執行 bash install.sh。
 安裝器包含指定函式的後端修正內容，會修改已通過檢查的核心函式與相關設定，詳見 ONE_CLICK.md。
 內附預先建置的外掛 bundle；noVNC 授權在 bot-screen-plugin/dashboard/LICENSE.novnc.txt。
 '''
-output = ROOT / 'dist' / 'bot-screen-hermes-one-click-0.5.0.zip'
+output = ROOT / 'dist' / 'bot-screen-hermes-one-click-0.6.0.zip'
 output.parent.mkdir(exist_ok=True)
 hashes = {}
 with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
@@ -59,6 +63,6 @@ with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
     archive.writestr('CONTENTS.json', json.dumps({'files':hashes,'noUserStateIncluded':True},indent=2))
 import shutil
 shutil.copy2(output, output.parent / 'bot-screen-hermes-plugin.zip')
-(output.parent / 'SHA256SUMS.txt').write_text(hashlib.sha256(output.read_bytes()).hexdigest() + '  ' + output.name + '\n', encoding='ascii')
+(output.parent / 'SHA256SUMS.txt').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest() + '  ' + p.name + '\n' for p in sorted(output.parent.glob('bot-screen-hermes-one-click-*.zip'))), encoding='ascii')
 print(json.dumps({'artifact':'dist/' + output.name,'files':len(files)+2,
                   'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'bytes':output.stat().st_size},indent=2))

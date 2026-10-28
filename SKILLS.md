@@ -30,7 +30,16 @@ If a skill of the same name exists, compare and back up local edits first. Start
 >
 > Use the bot-screen-linux skill to create and verify a test text file in the Linux desktop shown by Bot Screen. Pause while I take control.
 
-## 狀態 / Status
+## 一鍵安裝 / One-click installation
 
-本次建立可攜 skill 與文件，尚未自動安裝到每日使用的 profile，也尚未納入 0.5.0 一鍵安裝 ZIP。格式與文件連結檢查不代表真實 Agent 已完成桌面驗收。
-The portable skill and documentation are provided in the repository. They have not been automatically installed into a daily profile or added to the 0.5.0 installer ZIP. Format and link checks are separate from real Agent desktop acceptance.
+0.6.0 安裝器自動將 skill 及 references/scripts 安裝到專用 bot-screen-lab profile，納入備份與回復。已被自行修改的同名檔案會停止更新，避免覆蓋。這不會把 skill 安裝到其他個人 profile；在其他 profile 使用請按上方手動安裝。
+Installer 0.6.0 installs the skill and references/scripts into the dedicated bot-screen-lab profile with backup and rollback. Unknown local edits stop the update. Other personal profiles remain separate; use the manual procedure above for them.
+
+Skill 的 platforms 包含 Windows 與 Linux，因為這是 Agent 主機篩選，不是被操作桌面的 OS。實際操作目標仍必須是 Linux。
+The platforms metadata covers Windows and Linux Agent hosts; the operated desktop must still be Linux.
+
+
+## 驗收 / Acceptance
+
+[中英驗收紀錄 / Bilingual acceptance record](https://github.com/brianShih/hermes-dashboard-botscreen/blob/main/evidence/SKILL_ACCEPTANCE.md)：真實工具與桌面流程通過；尚非模型自主 Agent 驗收。
+Real tools and desktop flows passed; autonomous model-driven Agent evaluation remains separate.

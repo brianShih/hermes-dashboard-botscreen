@@ -3,6 +3,8 @@
   "gates": {
     "freshWindowsBackendReady": true,
     "startReusesExistingContainer": true,
+    "realAgentCaptureRefusedDuringHumanControl": true,
+    "realAgentCaptureResumesAfterHandback": true,
     "realFramebufferAndInput": true,
     "threeDisconnectReconnectCycles": true,
     "handbackAndWatchGate": true

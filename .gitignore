@@ -37,6 +37,7 @@ hermes/.hermes-runtime/
 # Keep only reviewed, portable release and acceptance artifacts
 /dist/*
 !/dist/bot-screen-hermes-one-click-0.5.0.zip
+!/dist/bot-screen-hermes-one-click-0.6.0.zip
 !/dist/SHA256SUMS.txt
 /evidence/*
 !/evidence/ONE_CLICK_QA.md
@@ -51,3 +52,6 @@ hermes/.hermes-runtime/
 !/evidence/summary.json
 !/evidence/acceptance.json
 !/evidence/windows-9119.json
+
+!/evidence/SKILL_ACCEPTANCE.md
+!/evidence/skill-release.json

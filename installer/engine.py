@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 import tempfile
 
-RELEASE = '0.5.0'
+RELEASE = '0.6.0'
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()

@@ -6,6 +6,14 @@ import {randomUUID} from 'node:crypto';
 import assert from 'node:assert/strict';
 const require=createRequire(new URL('../bot-screen-plugin/package.json',import.meta.url));
 const {chromium}=require('playwright');
+// Optional real Hermes tool checks, using an explicitly selected local runtime.
+const skillLaunch=process.env.BOT_SCREEN_SKILL_LAUNCH ? JSON.parse(await readFile(process.env.BOT_SCREEN_SKILL_LAUNCH,'utf8')) : null;
+const skillEnvironment=process.env.BOT_SCREEN_SKILL_ENV ? JSON.parse(await readFile(process.env.BOT_SCREEN_SKILL_ENV,'utf8')) : null;
+function skillCheck(mode){
+ if(!skillLaunch)return null;
+ const output=execFileSync(skillLaunch.python,['-I','-c',skillLaunch.code,mode],{env:skillEnvironment,encoding:'utf8',timeout:90000});
+ return JSON.parse(output.trim().split('\n').at(-1));
+}
 const origin=process.env.BOT_SCREEN_URL||'http://127.0.0.1:9125';
 assert.ok(['http://127.0.0.1:9119','http://127.0.0.1:9125'].includes(origin));
 const marker=JSON.parse(await readFile(join(process.env.LOCALAPPDATA,'hermes/profiles/bot-screen-lab/bot-desktop/sandbox.json'),'utf8'));
@@ -45,7 +53,7 @@ async function type(text){
  await page.keyboard.type(text); await page.waitForTimeout(400);
 }
 try{
- await page.goto(origin+'/bot-screen');await ready();
+ await page.goto(origin+'/bot-screen?profile=default');await ready();
  await page.evaluate(async source=>{const{RpcClient}=await import('data:text/javascript;base64,'+btoa(source));window.__qaRpc=new RpcClient();await window.__qaRpc.connect();},source);
  result.gates.freshWindowsBackendReady=true;
  const started=await page.evaluate(()=>window.__qaRpc.request('display.start',{profile:'bot-screen-lab'}));
@@ -59,6 +67,7 @@ try{
   assert.ok(frame.width>100&&frame.height>100&&frame.colors>10);
   const before=proof();await type('blocked');assert.equal(proof(),before);
   await section.locator('[data-action=takeover]').click();await page.waitForTimeout(350);
+  if(i===0&&skillLaunch){assert.equal(skillCheck('human-gate').humanCaptureRefused,true);result.gates.realAgentCaptureRefusedDuringHumanControl=true;}
   const text='winqa'+i;await type(text);assert.equal(proof(),before+text);
   await page.evaluate(()=>{for(const ws of window.__qaSockets){if(ws.readyState===1&&new URL(ws.url).pathname==='/api/display/ws')ws.close(4002,'qa-abnormal');}});
   await page.waitForFunction(()=>document.querySelector('[data-testid=bot-screen]')?.dataset.connected==='false');
@@ -67,6 +76,7 @@ try{
   await watch();await type('blocked');assert.equal(proof(),before+text);
   await section.locator('[data-action=takeover]').click();await page.waitForTimeout(350);
   await section.locator('[data-action=handback]').click();await page.waitForTimeout(350);
+  if(i===0&&skillLaunch){assert.equal(skillCheck('capture').actualComputerUseCapture,true);result.gates.realAgentCaptureResumesAfterHandback=true;}
   await type('blocked');assert.equal(proof(),before+text);
   result.cycles.push({frame,watchInputBlocked:true,realInput:true,disconnectRetainsLease:true,reconnected:true,handbackBlocksInput:true});
   if(i<2){await section.locator('.bs-more-button').click();await section.locator('[data-action=reconnect]').click();await ready();}
@@ -78,10 +88,13 @@ try{
 }catch(error){result.errors.push(error.message);result.status=await section.getByRole('status').innerText().catch(()=>null);process.exitCode=1;}
 finally{
  await browser.close();
- docker(['python3','-c',`import psutil
+ docker(['python3','-c',`import pathlib,os,signal,json
 expected=['python3','-c',${JSON.stringify(fixture)}]
-for process in psutil.process_iter(['cmdline']):
- if process.info['cmdline']==expected: process.terminate()
+for path in pathlib.Path('/proc').glob('[0-9]*/cmdline'):
+ try:
+  command=[part.decode() for part in path.read_bytes().split(bytes([0])) if part]
+  if command==expected: os.kill(int(path.parent.name),signal.SIGTERM)
+ except (OSError,UnicodeError): pass
 `]);
  await writeFile(`evidence/windows-${new URL(origin).port}.json`,JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
 }

@@ -1,0 +1,14 @@
+{
+  "release": "0.6.0",
+  "skill": "1.1.0",
+  "artifact": "dist/bot-screen-hermes-one-click-0.6.0.zip",
+  "sha256": "6dfb777c0f75c8813273126224ba636a7b60f3a6cc3772fdfc527f549b9ec77b",
+  "files": 45,
+  "archiveIntegrityPassed": true,
+  "installedProfile": "bot-screen-lab",
+  "repeatInstallChanges": 0,
+  "actualToolEnvironmentAndFileOperations": true,
+  "humanTakeoverHandbackAndThreeReconnectCycles": true,
+  "autonomousModelEvaluation": false,
+  "dashboardManagedRestartPending": true
+}

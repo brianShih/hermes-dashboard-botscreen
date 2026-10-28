@@ -1,13 +1,13 @@
 **繁體中文** | [English](ONE_CLICK.en.md)
 
-# Bot Screen 一鍵安裝（0.5.0）
+# Bot Screen 一鍵安裝（0.6.0）
 
 把多國語言外掛、Windows／Linux 後端修正與隔離 profile 整合成同一個安裝入口。適用於**已安裝 Hermes、且程式版本通過相容性檢查**的電腦；不是 Hermes 本體的安裝器。
 
 ## 開始安裝
 
 1. 電腦先安裝 Hermes。使用 Docker 桌面時，Windows 開啟 Docker Desktop 並切到 Linux containers；Linux 啟動 Docker Engine。
-2. 將 `bot-screen-hermes-one-click-0.5.0.zip` **完整解壓縮**到一個資料夾，不要直接在壓縮檔內執行。
+2. 將 `bot-screen-hermes-one-click-0.6.0.zip` **完整解壓縮**到一個資料夾，不要直接在壓縮檔內執行。
 3. Windows 雙擊 **`Install.cmd`**。Linux 在解壓縮的資料夾執行：
 
    ```bash
@@ -96,3 +96,9 @@ bash install.sh --rollback latest
 本版以目前 Windows 主機的乾淨目錄、Docker 桌面，以及 Linux 容器內的乾淨目錄／原生桌面驗證安裝、重複執行及回復；不是不同實體電腦、全新 Windows VM、所有 Linux 發行版或 macOS 的全面認證。新機的 Docker／Hermes 前置安裝、系統權限與不同 Hermes 版本仍需通過現場檢查。
 
 安裝包附 `CONTENTS.json` 供損毀檢查；這不是數位簽章。
+
+
+## Agent skill / Agent 操作技能
+
+Installer 0.6.0 includes bot-screen-linux 1.1.0 in the dedicated profile, with guarded updates and rollback. See [SKILLS.md](SKILLS.md).
+安裝器包含 Linux 操作 skill 1.1.0，安裝至專用 profile，提供更新保護與回復；詳見 SKILLS.md。

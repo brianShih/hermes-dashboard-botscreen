@@ -2,12 +2,12 @@
 
 Agent Linux 操作技能 / Agent Linux operations: [安裝與使用 / Installation and usage](SKILLS.md).
 
-Watch an isolated Linux desktop in Hermes Dashboard, take over keyboard and mouse control, and hand control back to the Agent. Includes a multilingual plugin (0.4.0), Windows/Linux backend fixes, and a one-click installer (0.5.0).
+Watch an isolated Linux desktop in Hermes Dashboard, take over keyboard and mouse control, and hand control back to the Agent. Includes a multilingual plugin (0.4.0), Windows/Linux backend fixes, and a one-click installer (0.6.0).
 在 Hermes Dashboard 觀看隔離 Linux 桌面、接管鍵盤滑鼠，再將控制權交回 Agent。包含多國語言外掛、跨平台後端修正及一鍵安裝器。
 
 ## Quick start / 快速開始
 
-Download and fully extract [Installer ZIP / 安裝包](dist/bot-screen-hermes-one-click-0.5.0.zip). Windows: double-click `Install.cmd`. Linux: run `bash install.sh`. Requires existing compatible Hermes and, for Docker mode, a running Docker installation. Default URL: `http://127.0.0.1:9119/bot-screen`.
+Download and fully extract [Installer ZIP / 安裝包](dist/bot-screen-hermes-one-click-0.6.0.zip). Windows: double-click `Install.cmd`. Linux: run `bash install.sh`. Requires existing compatible Hermes and, for Docker mode, a running Docker installation. Default URL: `http://127.0.0.1:9119/bot-screen`.
 下載並完整解壓縮安裝包；Windows 雙擊 `Install.cmd`，Linux 執行 `bash install.sh`。需要既有相容 Hermes；Docker 模式需要已啟動 Docker。
 
 | Documentation / 文件 | 繁體中文 | English |
@@ -37,17 +37,17 @@ Validation covers the current Windows/Docker host and native Linux desktops insi
 
 ## 詳細中文介紹 / Detailed Chinese reference
 
-> **一鍵安裝 0.5.0：** Windows 完整解壓縮後雙擊 `Install.cmd`；Linux 執行 `bash install.sh`。前後端修正、隔離 profile、備份與回復已整合，請先看 [ONE_CLICK.md](ONE_CLICK.md)。下文保留架構與手動／舊版安裝說明。
+> **一鍵安裝 0.6.0：** Windows 完整解壓縮後雙擊 `Install.cmd`；Linux 執行 `bash install.sh`。前後端修正、隔離 profile、備份與回復已整合，請先看 [ONE_CLICK.md](ONE_CLICK.md)。下文保留架構與手動／舊版安裝說明。
 
 # Bot Screen：Hermes 的桌面橋接與 Web 操作介面
 
 Bot Screen 讓使用者在 **Hermes Webapp 裡觀看與操作隔離的 Linux 桌面**，並管理人工與 Agent 之間的控制權。
 
-這個專案夾包含經隱私清理的 Hermes 原始碼快照、Bot Screen Dashboard plugin、隔離環境啟動腳本，以及實際操作的測試與證據。它包含一鍵安裝包 0.5.0，已在 Windows／Docker 與 Linux 原生模式的隔離環境完成安裝、重複安裝及回復驗證；不同實體電腦與所有 Linux 發行版仍須通過安裝時的相容性檢查。
+這個專案夾包含經隱私清理的 Hermes 原始碼快照、Bot Screen Dashboard plugin、隔離環境啟動腳本，以及實際操作的測試與證據。它包含一鍵安裝包 0.6.0，已在 Windows／Docker 與 Linux 原生模式的隔離環境完成安裝、重複安裝及回復驗證；不同實體電腦與所有 Linux 發行版仍須通過安裝時的相容性檢查。
 
 **安裝到既有 Hermes：優先使用 [ONE_CLICK.md](ONE_CLICK.md)**，Windows 雙擊 `Install.cmd`，Linux 執行 `bash install.sh`。`scripts/install-plugin.py` 是僅更新前端的舊式進階入口。
 
-可直接使用小型 [一鍵安裝包 0.5.0](dist/bot-screen-hermes-one-click-0.5.0.zip)，不必搬走完整 Hermes 原始碼。它不含 profiles、密碼、依賴快取或測試報告。
+可直接使用小型 [一鍵安裝包 0.6.0](dist/bot-screen-hermes-one-click-0.6.0.zip)，不必搬走完整 Hermes 原始碼。它不含 profiles、密碼、依賴快取或測試報告。
 
 本份已移除作者聯絡對照資料與已辨識個人路徑，保留 LICENSE 和第三方聲明。原始稽核紀錄保留在本機，不納入版本庫；第三方依賴及必要授權中的公開作者資訊仍保留。
 

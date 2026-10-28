@@ -126,6 +126,16 @@ def prepare(root, home, python, options):
     home_edit('profiles/bot-screen-lab/.env', b'# Isolated Bot Screen profile; no credentials copied.\n', True)
     home_edit('profiles/bot-screen-lab/.no-bundled-skills', b'', True)
     home_edit('profiles/bot-screen-lab/profile.yaml', b'name: bot-screen-lab\ndescription: Isolated Bot Screen desktop\n', True)
+    baselines = json.loads((PACKAGE / 'installer/skill-baselines.json').read_text(encoding='utf-8'))
+    for relative in ['SKILL.md', 'references/environment.md', 'references/linux-tasks.md',
+                     'references/workflows.md', 'scripts/environment_probe.py']:
+        source = PACKAGE / 'skills/bot-screen-linux' / relative
+        destination = 'profiles/bot-screen-lab/skills/bot-screen-linux/' + relative
+        before = read(regular_target(home, destination))
+        after = source.read_bytes()
+        if before is not None and before != after and sha(before) not in baselines.get(relative, []):
+            raise ValueError('Locally modified Bot Screen skill; preserve or move it before updating: ' + relative)
+        home_edit(destination, after)
     for relative in ['manifest.json', 'dist/index.js', 'LICENSE.novnc.txt']:
         home_edit('plugins/bot-screen-lab/dashboard/' + relative, (PACKAGE / 'bot-screen-plugin/dashboard' / relative).read_bytes())
     return edits, dependencies, config

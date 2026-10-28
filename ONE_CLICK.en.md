@@ -1,4 +1,4 @@
-# Bot Screen one-click installation (0.5.0)
+# Bot Screen one-click installation (0.6.0)
 
 [繁體中文](ONE_CLICK.md) | **English**
 
@@ -7,7 +7,7 @@ Requires an existing compatible Hermes installation. This bundle installs Bot Sc
 ## Install
 
 1. Start Docker Desktop in Linux-container mode on Windows, or Docker Engine on Linux. Native Linux mode requires its desktop dependencies already installed.
-2. Fully extract `bot-screen-hermes-one-click-0.5.0.zip`.
+2. Fully extract `bot-screen-hermes-one-click-0.6.0.zip`.
 3. Windows: double-click `Install.cmd`. Linux: run `bash install.sh`.
 
 Hermes Python is reused; Node.js, npm, and Git are unnecessary. Missing desktop images are downloaded from `nousresearch/hermes-sandbox:desktop`. The installer does not install Docker, run sudo, or reboot. Install missing prerequisites and rerun.
@@ -61,3 +61,9 @@ Results: `runtime/bot-screen-installer/result.json` under Hermes home. Exit code
 Install/reinstall/rollback passed in fresh directories on the current Windows/Docker host and inside a Linux container with a native desktop. Clean VMs, other physical machines, all Linux distributions, Linux-host Docker daemons, and macOS are not certified. The image-download branch was not exercised because the image was cached.
 
 The archive excludes user profiles, credentials, backups, test reports, Docker images, and node_modules. `CONTENTS.json` checks integrity; it is not a digital signature.
+
+
+## Agent skill / Agent 操作技能
+
+Installer 0.6.0 includes bot-screen-linux 1.1.0 in the dedicated profile, with guarded updates and rollback. See [SKILLS.md](SKILLS.md).
+安裝器包含 Linux 操作 skill 1.1.0，安裝至專用 profile，提供更新保護與回復；詳見 SKILLS.md。

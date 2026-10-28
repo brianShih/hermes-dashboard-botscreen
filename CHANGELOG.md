@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+
+- 整合 Linux 操作 skill 1.1.0、唯讀環境探查與接管／恢復流程；安裝時備份並拒絕未知當地修改。
+  Bundle Linux operations skill 1.1.0, read-only discovery, and takeover/recovery workflows; back up skill updates and reject unknown local edits.
+
 ## 0.5.0
 
 - 中英文件：新增英文安裝、架構、跨平台與 UI 指南；安裝包附語言切換。

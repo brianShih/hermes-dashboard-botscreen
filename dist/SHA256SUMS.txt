@@ -1,1 +1,2 @@
 1cd0d03b23e6fbb3ce370671cf65891a822e639e48104edc4c52220c81c630b1  bot-screen-hermes-one-click-0.5.0.zip
+6dfb777c0f75c8813273126224ba636a7b60f3a6cc3772fdfc527f549b9ec77b  bot-screen-hermes-one-click-0.6.0.zip
