@@ -1,5 +1,7 @@
 # Bot Screen｜Hermes Dashboard desktop bridge / 桌面橋接
 
+Agent Linux 操作技能 / Agent Linux operations: [安裝與使用 / Installation and usage](SKILLS.md).
+
 Watch an isolated Linux desktop in Hermes Dashboard, take over keyboard and mouse control, and hand control back to the Agent. Includes a multilingual plugin (0.4.0), Windows/Linux backend fixes, and a one-click installer (0.5.0).
 在 Hermes Dashboard 觀看隔離 Linux 桌面、接管鍵盤滑鼠，再將控制權交回 Agent。包含多國語言外掛、跨平台後端修正及一鍵安裝器。
 
